@@ -33,20 +33,29 @@ def check_ssh_keys():
             print("Llave generada. Verifica ~/.ssh/")
         return False
 def check_github_pat():
-    print("\n[3] Buscando Personal Access Token (PAT) de GitHub en variables de entorno...")
+    print("\n[3] Buscando Personal Access Token (PAT) de GitHub en variables de entorno y en .env...")
     pat_vars = ["GH_TOKEN", "GITHUB_TOKEN", "GH_PAT", "GITHUB_PAT"]
     found = False
+
+    # Revisar variables de entorno
     for var in pat_vars:
         if os.environ.get(var):
-            print(f"✅ PAT encontrado en la variable de entorno: {var}")
+            print(f"✅ PAT encontrado en variable de entorno: {var}")
             found = True
-    if not found:
-        print("❌ No se encontró PAT en variables de entorno comunes.")
-        set_pat = input("¿Deseas configurar un PAT ahora? (s/n): ").strip().lower()
-        if set_pat == "s":
-            print("Puedes exportar tu token con: export GITHUB_TOKEN=tu_token")
-    return found
 
+    # Revisar archivo .env
+    env_path = Path(__file__).parent / ".env"
+    if env_path.exists():
+        with open(env_path, "r") as f:
+            for line in f:
+                for var in pat_vars:
+                    if line.startswith(f"{var}="):
+                        print(f"✅ PAT encontrado en .env: {var}")
+                        found = True
+
+    if not found:
+        print("❌ No se encontró PAT de GitHub en variables de entorno ni en .env.")
+    return found
 def check_github_app():
     print("\n[4] Buscando credenciales de GitHub App en variables de entorno...")
     app_vars = ["GITHUB_APP_ID", "GITHUB_APP_PRIVATE_KEY", "GH_APP_ID", "GH_APP_KEY"]
