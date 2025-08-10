@@ -1,0 +1,9 @@
+{
+  "name": "n8n DevContainer",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "n8n",
+  "workspaceFolder": "/workspace",
+  "forwardPorts": [5678],
+  "postCreateCommand": "echo 'n8n DevContainer listo'",
+  "remoteUser": "node"
+}
