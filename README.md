@@ -29,6 +29,28 @@ Este entorno está basado en Alpine Linux (edge) y contiene:
    python3 github_validator.py
    ```
 
+## Variables de entorno
+
+Asegúrate de definir las siguientes variables en tu archivo `.env`:
+
+```env
+GITHUB_TOKEN=tu_token_github
+app_gmail_password=tu_app_password_gmail
+```
+
+## Ejemplo de prueba de workflow n8n
+
+Para probar el workflow de email vía webhook:
+
+1. Activa el workflow en n8n.
+2. Ejecuta en la terminal:
+   ```sh
+   curl -X POST http://localhost:5678/webhook/lab1-webhook \
+     -H "Content-Type: application/json" \
+     -d '{"nombre": "Juan", "asunto": "Prueba n8n", "mensaje": "¡Hola desde el webhook!"}'
+   ```
+3. Verifica el correo en la bandeja de entrada.
+
 ## Estructura
 
 - `.devcontainer/`: Configuración del entorno (Dockerfile, docker-compose.yml, Caddyfile).

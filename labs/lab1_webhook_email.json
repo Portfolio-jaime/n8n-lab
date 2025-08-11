@@ -1,0 +1,52 @@
+{
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "lab1-webhook"
+      },
+      "id": "Webhook",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [240, 300]
+    },
+    {
+      "parameters": {
+        "fromEmail": "arheanja@gmail.com",
+        "toEmail": "arheanja@gmail.com",
+        "subject": "{{$json['asunto']}}",
+        "text": "Nombre: {{$json['nombre']}}\nMensaje: {{$json['mensaje']}}",
+        "smtp": {
+          "host": "smtp.gmail.com",
+          "port": 587,
+          "secure": true,
+          "user": "arheanja@gmail.com",
+          "password": "={{ $env['app_gmail_password'] }}"
+        }
+      },
+      "id": "SendEmail",
+      "name": "Send Email",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 1,
+      "position": [480, 300]
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Send Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {},
+  "name": "Lab1 Webhook to Email",
+  "id": 2
+}

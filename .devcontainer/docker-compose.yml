@@ -7,6 +7,7 @@ services:
       dockerfile: Dockerfile
     ports:
       - "5678:5678"
+      - "587:587"
     environment:
       - DB_TYPE=postgresdb
       - DB_POSTGRESDB_HOST=db
@@ -14,12 +15,12 @@ services:
       - DB_POSTGRESDB_DATABASE=n8n
       - DB_POSTGRESDB_USER=n8n
       - DB_POSTGRESDB_PASSWORD=n8npass
-      - GENERIC_TIMEZONE=Europe/Madrid
+      - GENERIC_TIMEZONE=America/Bogota
     depends_on:
       - db
     volumes:
       - n8n_data:/home/node/.n8n
-      - ..:/workspace:cached
+      - ..:/workspace
 
   db:
     image: postgres:14

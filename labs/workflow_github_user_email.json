@@ -1,0 +1,58 @@
+{
+  "nodes": [
+    {
+      "parameters": {
+        "url": "https://api.github.com/user",
+        "method": "GET",
+        "headers": [
+          {
+            "name": "Authorization",
+            "value": "Bearer {{$env[\"GITHUB_TOKEN\"]}}"
+          }
+        ]
+      },
+      "id": "GitHubUser",
+      "name": "GitHub User",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [240, 300]
+    },
+    {
+      "parameters": {
+        "fromEmail": "arheanja@gmail.com",
+        "toEmail": "arheanja@gmail.com",
+        "subject": "Usuario GitHub",
+        "text": "Usuario: {{$json[\"login\"] || $json[0][\"login\"]}}\nNombre: {{$json[\"name\"] || $json[0][\"name\"]}}\nEmail: {{$json[\"email\"] || $json[0][\"email\"]}}",
+        "smtp": {
+          "host": "smtp.gmail.com",
+          "port": 587,
+          "secure": true,
+          "user": "arheanja@gmail.com",
+          "password": "={{ $env['app_gmail_password'] }}"
+        }
+      },
+      "id": "SendEmail",
+      "name": "Send Email",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 1,
+      "position": [480, 300]
+    }
+  ],
+  "connections": {
+    "GitHubUser": {
+      "main": [
+        [
+          {
+            "node": "Send Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {},
+  "name": "GitHub User Email",
+  "id": 1
+}

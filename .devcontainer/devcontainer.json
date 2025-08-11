@@ -4,6 +4,13 @@
   "service": "n8n",
   "workspaceFolder": "/workspace",
   "forwardPorts": [5678],
-  "postCreateCommand": "echo 'n8n DevContainer listo'",
+  "postCreateCommand": "git config --global user.name 'n8n-user' && git config --global user.email 'jaimehenao8126@outlook.com' && echo 'n8n DevContainer listo'",
+  "customizations": {
+    "vscode": {
+      "settings": {
+    "terminal.integrated.shell.linux": "/bin/bash"
+      }
+    }
+  },
   "remoteUser": "node"
 }
